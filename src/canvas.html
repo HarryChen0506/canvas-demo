@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas案例</title>
+  <style>
+    .cantainer {
+      width: 800px;
+      margin: 100px auto;
+    }
+    #myCanvas {
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="cantainer">
+    <canvas id="myCanvas" width="800" height="400" style="border:1px solid #000000;"></canvas>
+    <img src="./img/815095481528091838.jpg" id="people" alt="" style="display: none">
+    <img src="./img/e8a01c6c-a009-4eb2-8edb-115139662e8a.jpg" id="bg" alt="" style="display: none">
+  </div>
+
+
+<script>
+  var canvas = document.getElementById('myCanvas');
+  var context = canvas.getContext('2d');
+  // console.log('ctx', ctx)
+
+ 
+  var n = 0;
+  var dx = 150;
+  var dy = 150;
+  var s = 100;  
+  context.fillStyle = 'pink';
+  context.strokeStyle = 'rgb(0,0,100)';
+  var x = Math.sin(0);
+  var y = Math.cos(0);
+  var dig = Math.PI / 15 * 7;
+  function drawStar(){
+    var i = 0;
+    var timerId = setInterval(function(){
+      if(i>=30){         
+        clearInterval(timerId)
+        return
+      }
+      line(i)
+      i++;
+    }, 1000)
+  }
+  function line(i){
+    context.beginPath();
+    context.clearRect(0,0,800,400)
+    for(var j=0; j<=i; j++){
+      var x = Math.sin(j * dig);
+      var y = Math.cos(j * dig);
+      context.lineTo(dx + x * s, dy + y * s); 
+    }   
+    context.closePath();
+    context.fill();
+    context.stroke();      
+  }
+  drawStar()
+  context.closePath();
+  context.fill();
+  context.stroke();
+
+  // ctx.fillStyle="#FF0000";
+
+  // var grd=ctx.createLinearGradient(10,0,150,0);
+  // grd.addColorStop(0,"red");
+  // grd.addColorStop(0.5,"green");
+  // grd.addColorStop(1,"white");
+  // ctx.fillStyle=grd;
+  // ctx.fillRect(20,20,100,175);
+
+  // drawLine(ctx, {
+  //   from: {x:50, y:50},
+  //   to: {x:200, y:200}
+  // })
+  
+  // ctx.font="30px Arial";
+  // ctx.fillText("Hello World",10,50);
+  // ctx.strokeText("Hello World",10,50);
+
+  // drawCircle(ctx, {
+  //   x: 150,
+  //   y: 150,
+  //   r: 50,
+  //   start: 0,
+  //   stop: Math.PI*0.5
+  // })
+
+  // var people = document.getElementById('people')
+  // var bg = document.getElementById('bg')
+  // ctx.drawImage(people,0,0);
+  // ctx.drawImage(bg,50,50);
+
+
+
+
+
+  function drawLine(ctx, option){
+    var from = option.from;
+    var to = option.to;
+    ctx.moveTo(from.x, from.y)
+    ctx.lineTo(to.x, to.y)
+    ctx.stroke()
+  }
+  function drawCircle(ctx, option){
+    ctx.arc(option.x, option.y, option.r, option.start, option.stop)
+    // ctx.stroke()
+    ctx.fill()
+  }
+
+</script>
+  
+</body>
+</html>
