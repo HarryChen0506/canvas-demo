@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas实现滤镜</title>
+</head>
+<body>
+  <input id="image-upload" type="file">
+  <div class="canvas-wrap" style="text-align: center"> 
+    <div style="display: inline-block"> 
+        <canvas id="canvas-before" width="400" height="400" style="display: inline-block; border:1px solid #000;margin-right:20px"></canvas>
+        <canvas id="canvas-after" width="400" height="400" style="display: inline-block; border:1px solid #000;"></canvas>
+    </div>
+  </div>
+  <div> 
+    <button id="gray">灰度</button>
+    <button id="balck">黑白</button>
+  </div>
+  
+
+<script>
+
+  var input = document.getElementById('image-upload')
+  input.addEventListener('change', upload)
+  var button_gray = document.getElementById('gray')
+  button_gray.addEventListener('click', converGray) 
+  var button_black = document.getElementById('balck')
+  button_black.addEventListener('click', converBlack) 
+  var canvas_before = document.getElementById('canvas-before')
+  var canvas_after = document.getElementById('canvas-after')
+  var ctx_before = canvas_before.getContext('2d')
+  var ctx_after = canvas_after.getContext('2d')
+
+  function upload(e) {    
+    var file = e.target.files[0]
+    // console.log('file', file)
+    input.value = ''
+    // 将file转成base64
+    convertFileToBase64 (file, function(dataUrl) {
+      // console.log('data', dataUrl)
+      createImg(dataUrl, function(image){
+        // document.body.appendChild(image)
+        ctx_before.drawImage(image, 0, 0,300, 400)
+      })
+      
+    })
+  }
+  // 将文件转化成base64
+  function convertFileToBase64 (file, callback) {
+    var reader = new FileReader()
+    reader.onload = function () {
+      // console.log('reader', reader)
+      typeof callback === 'function' && callback(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
+  // 创建图片节点
+  function createImg (dataUrl, callback) {
+    var image = new Image()
+    image.src = dataUrl
+    image.onload = function () {
+      callback(image)
+    }
+  }
+
+  // 灰度
+  function converGray () {
+    console.log('gray')
+    var imageData = ctx_before.getImageData(0, 0, 400, 400)
+    // console.log('imageData', imageData)
+    
+    var newImageData = pixelTurnGray(imageData, 400, 400)
+    ctx_after.putImageData(newImageData, 0, 0)
+  }
+  function converBlack () {
+    var imageData = ctx_before.getImageData(0, 0, 400, 400)
+    // console.log('imageData', imageData)
+    
+    var newImageData = pixelTurnBlack(imageData, 400, 400)
+    ctx_after.putImageData(newImageData, 0, 0)
+  }
+
+  // 像素处理
+  function pixelTurnGray (imageData, w, h) {
+    var data = imageData.data
+    for(var i=0; i<w; i++){
+      for(var j=0; j<h; j++){
+        var pos = (j*w+i)*4        
+        var r = data[pos+0]
+        var g = data[pos+1]
+        var b = data[pos+2]
+        var a = data[pos+3]
+        // console.log(r, g,b, a)
+        var gray = r*0.3 +g*0.59+b*0.11
+        data[pos+0] = gray
+        data[pos+1] = gray
+        data[pos+2] = gray        
+      }
+    }
+    return imageData
+  }
+  function pixelTurnBlack (imageData, w, h) {
+    var data = imageData.data
+    for(var i=0; i<w; i++){
+      for(var j=0; j<h; j++){
+        var pos = (j*w+i)*4        
+        var r = data[pos+0]
+        var g = data[pos+1]
+        var b = data[pos+2]
+        var a = data[pos+3]
+        // console.log(r, g,b, a)
+        var gray = r*0.3 +g*0.59+b*0.11
+        if(gray>150){
+          gray = 255
+        }else{
+          gray = 0
+        }
+        data[pos+0] = gray
+        data[pos+1] = gray
+        data[pos+2] = gray        
+      }
+    }
+    return imageData
+  }
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

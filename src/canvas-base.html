@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas基础语法</title>
+</head>
+<body>
+  <canvas id="my-canvas" width="800" height="400" style="border: 1px solid #000"></canvas>
+<script>
+  var canvas = document.getElementById('my-canvas')
+  var ctx = canvas.getContext('2d')
+  console.log('ctx', ctx)
+  
+  ctx.strokeStyle = 'red'
+  ctx.moveTo(20, 20)
+  ctx.lineTo(100, 100)
+
+  ctx.strokeStyle = 'blue'
+  ctx.moveTo(40, 20)
+  ctx.lineTo(120,100)
+  ctx.stroke()
+
+ 
+  // ctx.moveTo(135, 50)
+  ctx.beginPath()
+  ctx.fillStyle='#FF0000';
+  ctx.arc(95,50,40,0,2*Math.PI);
+  ctx.fill()
+
+  ctx.beginPath()
+  ctx.fillStyle='yellow';
+  ctx.arc(195,50,40,0,2*Math.PI);
+  ctx.fill()
+
+</script>
+</body>
+</html>
