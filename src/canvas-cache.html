@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas缓存</title>
+</head>
+
+<body>
+  <canvas id="my-canvas" width="800" height="400" style="border: 1px solid #000"></canvas>
+  <script>
+    var canvas = document.getElementById('my-canvas')
+    var ctx = canvas.getContext('2d')
+    console.log('ctx', ctx)
+
+    function Rect(x, y, width, useCache) {
+      this.x = x
+      this.y = y
+      this.width = width
+      this.useCache = useCache || false
+      if (this.useCache) {
+        this.cache()
+      }
+    }
+    Rect.prototype = {
+      draw: function (ctx) {
+        if (!this.useCache) {
+          ctx.save()
+          ctx.strokeStyle = 'red'
+          ctx.strokeRect(this.x, this.y, this.width, this.width)
+          ctx.restore()
+        } else {
+          ctx.save()
+          ctx.drawImage(this.cacheCanvas, this.x - 0.5 * this.width, this.y - 0.5 * this.width)
+          ctx.restore()
+        }
+      },
+      cache: function () {
+        this.cacheCanvas = document.createElement("canvas");
+        this.cacheCtx = this.cacheCanvas.getContext("2d");
+        this.cacheCtx.width = 2 * this.width;
+        this.cacheCtx.height = 2 * this.width;
+        this.cacheCtx.save();
+        this.cacheCtx.strokeStyle = 'blue'
+        this.cacheCtx.strokeRect(0.5 * this.width, 0.5 * this.width, this.width, this.width)
+        this.cacheCtx.restore();
+      },
+      translate: function(ctx, x, y) {
+        ctx.translate(x, y)
+      }
+    }
+
+    var rect = new Rect(0, 0, 50, false)
+    ctx.save()
+    rect.translate(ctx, 20, 0)
+    rect.translate(ctx, 0, 20)
+    rect.draw(ctx)
+    ctx.restore()
+
+    var newRect = new Rect(10, 100, 50, true)
+    rect.translate(ctx, 40, 0)
+    newRect.draw(ctx)
+
+  </script>
+</body>
+
+</html>
