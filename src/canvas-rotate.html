@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas旋转</title>
+</head>
+
+<body>
+  <canvas id="my-canvas" width="800" height="400" style="border: 1px solid #000"></canvas>
+  <script>
+    var canvas = document.getElementById('my-canvas')
+    var ctx = canvas.getContext('2d')
+
+    function Rect(x, y, width) {
+      this.x = x
+      this.y = y
+      this.width = width
+    }
+    Rect.prototype = {
+      draw: function (ctx) {
+        ctx.save()
+        ctx.strokeStyle = 'red'
+        ctx.strokeRect(this.x, this.y, this.width, this.width)
+        ctx.restore()
+      },
+    }
+
+    // var rect = new Rect(30, 30, 50)
+    // ctx.save()
+    // rect.draw(ctx)
+    // ctx.restore()
+
+    // var newRect = new Rect(0, 0, 50)
+    // ctx.save()
+    // ctx.translate(150, 150)
+    // // ctx.scale(-1, 1)
+    // newRect.draw(ctx)
+    // ctx.restore()
+
+    // var newRect = new Rect(0, 0, 50)
+    // ctx.save()
+    // ctx.translate(150, 150)
+    // ctx.scale(-1, 1)
+    // newRect.draw(ctx)
+    // ctx.restore()
+
+
+    // var newRect = new Rect(30, 30, 50)
+    // ctx.save()
+    // ctx.translate(55, 55)
+    // ctx.rotate(Math.PI * 0.25)
+    // ctx.translate(-55, -55)
+    // rect.draw(ctx)
+    // // ctx.restore()
+    // ctx.translate(10, 10)
+    // rect.draw(ctx)
+    // // newRect.draw(ctx)
+
+    function draw() {
+      var ctx = document.getElementById('my-canvas').getContext('2d');
+
+      var sin = Math.sin(Math.PI / 6);
+      var cos = Math.cos(Math.PI / 6);
+      ctx.translate(100, 100);
+      var c = 0;
+      for (var i = 0; i <= 12; i++) {
+        c = Math.floor(255 / 12 * i);
+        ctx.fillStyle = "rgb(" + c + "," + c + "," + c + ")";
+        ctx.fillRect(0, 0, 100, 10);
+        ctx.transform(cos, sin, -sin, cos, 0, 0);
+      }
+
+      ctx.setTransform(-1, 0, 0, 1, 100, 100);
+      ctx.fillStyle = "rgba(255, 128, 255, 0.5)";
+      ctx.fillRect(0, 0, 100, 100);
+    }
+    // draw()
+
+    var context = document.getElementById("my-canvas");
+    var ctx = context.getContext("2d");
+    context.width = 600;
+    context.height = 600;
+    context.style.border = "1px solid red";
+
+    ctx.beginPath();
+    ctx.fillStyle = "#ff0"
+    ctx.fillRect(10, 10, 580, 580);
+    ctx.beginPath();
+
+    ctx.arc(290, 290, 100, 0, Math.PI * 2);//裁剪圆形区域，若其他图形，可以使用fillRect()，bezierCourveTo()等
+    // ctx.fillStyle = "green";//设置裁剪区域颜色
+    // ctx.fill()//填充裁剪区域
+    ctx.arc(50, 50, 100, 0, Math.PI * 2)
+    ctx.clip(); //裁剪
+
+    ctx.fillStyle = "#f00"
+    ctx.fillRect(10, 10, 500, 500);
+  </script>
+
+
+</body>
+
+</html>
