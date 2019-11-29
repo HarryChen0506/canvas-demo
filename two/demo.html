@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>two.js demo</title>
+  <style>
+    .cantainer {
+      width: 800px;
+      margin: 100px auto;
+      background: #eee;
+    }
+
+    #canvas {
+      margin: 0 auto;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="cantainer" id='demo'>
+    <!-- <canvas id="canvas" width="800" height="400" style="border:1px solid #000000;"></canvas> -->
+  </div>
+</body>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/two.js/build/two.js"></script>
+<script>
+  console.log(Two)
+  // Make an instance of two and place it on the page.
+  var elem = document.getElementById('demo');
+  var two = new Two({ 
+    type: Two.Types.canvas,
+    width: 285, 
+    height: 200 
+  }).appendTo(elem);
+
+  // two has convenience methods to create shapes.
+  var circle = two.makeCircle(72, 100, 50);
+  var rect = two.makeRectangle(213, 100, 100, 100);
+
+  // The object returned has many stylable properties:
+  circle.fill = '#FF8000';
+  circle.stroke = 'orangered'; // Accepts all valid css color
+  circle.linewidth = 5;
+
+  rect.fill = 'rgb(0, 200, 255)';
+  rect.opacity = 0.75;
+  rect.noStroke();
+
+
+  // two.update()
+  two.render()
+
+
+</script>
+
+</html>
