@@ -8,7 +8,7 @@
   <title>two.js demo</title>
   <style>
     .cantainer {
-      width: 800px;
+      width: 300px;
       margin: 100px auto;
       background: #eee;
     }
@@ -28,12 +28,12 @@
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/two.js/build/two.js"></script>
 <script>
-  console.log(Two)
+  // console.log(Two)
   // Make an instance of two and place it on the page.
   var elem = document.getElementById('demo');
   var two = new Two({ 
     type: Two.Types.canvas,
-    width: 285, 
+    width: 300, 
     height: 200 
   }).appendTo(elem);
 
@@ -47,9 +47,11 @@
   circle.linewidth = 5;
 
   rect.fill = 'rgb(0, 200, 255)';
-  rect.opacity = 0.75;
-  rect.noStroke();
+  rect.opacity = 0.1;
+  // rect.noStroke();
 
+  var text = new Two.Text('123', 30, 30, {size: 20})
+  two.add(text)
 
   // two.update()
   two.render()
