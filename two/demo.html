@@ -39,19 +39,25 @@
 
   // two has convenience methods to create shapes.
   var circle = two.makeCircle(72, 100, 50);
-  var rect = two.makeRectangle(213, 100, 100, 100);
+  // var rect = two.makeRectangle(213, 100, 100, 100);
 
   // The object returned has many stylable properties:
   circle.fill = '#FF8000';
   circle.stroke = 'orangered'; // Accepts all valid css color
   circle.linewidth = 5;
 
-  rect.fill = 'rgb(0, 200, 255)';
-  rect.opacity = 0.1;
+  // rect.fill = 'rgb(0, 200, 255)';
+  // rect.opacity = 0.1;
   // rect.noStroke();
 
-  var text = new Two.Text('123', 30, 30, {size: 20})
-  two.add(text)
+  var roundRect = new Two.RoundedRectangle(100, 200, 150, 50, 5)
+  roundRect.fill = 'pink';
+
+  var path = two.makePath(10, 10, 20, 20, 20, 35, false)
+  path.stroke = 'orangered'
+  // var path = new Two.Path(vertices, true, true, true)
+
+  two.add(roundRect)
 
   // two.update()
   two.render()
