@@ -34,7 +34,7 @@
   var two = new Two({ 
     type: Two.Types.canvas,
     width: 300, 
-    height: 200 
+    height: 300 
   }).appendTo(elem);
 
   // two has convenience methods to create shapes.
@@ -50,7 +50,7 @@
   // rect.opacity = 0.1;
   // rect.noStroke();
 
-  var roundRect = new Two.RoundedRectangle(100, 200, 150, 50, 5)
+  var roundRect = new Two.Rectangle(100, 200, 150, 50)
   roundRect.fill = 'pink';
 
   var path = two.makePath(10, 10, 20, 20, 20, 35, false)

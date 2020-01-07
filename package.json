@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/HarryChen0506/canvas-demo#readme",
   "dependencies": {
+    "fabric": "^3.6.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.0",
     "two.js": "^0.7.0-beta.3"
